@@ -318,7 +318,6 @@ calcular.addEventListener("click",()=>{
     console.log('Base Horizontal ->'+baseNasalTemporal_OI);
     console.log('Base Vertical ->'+baseSuperiorOInferior_OI);
 
-
     console.log('Suma efectoPrismaticosHorizontales: '+sumaH);
     console.log('Suma efectoPrismaticosVerticales: '+sumaV);
 });
@@ -785,6 +784,10 @@ function sumaHorizontal(baseNasalTemporal_OI,baseNasalTemporal){
         resultado = (parseFloat(baseNasalTemporal_OI.split('B')[0])+parseFloat(baseNasalTemporal.split('B')[0])).toString()+'Δ';
     }else if(baseNasalTemporal_OI.split('B')[1] != baseNasalTemporal.split('B')[1]){
         resultado = (Math.abs(parseFloat(baseNasalTemporal_OI.split('B')[0])-parseFloat(baseNasalTemporal.split('B')[0]))).toString()+'Δ';
+    }else if(baseNasalTemporal_OI==0){
+        resultado = baseNasalTemporal;
+    }else if(baseNasalTemporal == 0){
+        resultado = baseNasalTemporal_OI;
     }
 
     return resultado;
@@ -797,6 +800,10 @@ function sumaVertical(baseSuperiorOInferior_OI,baseSuperiorOInferior){
         resultado = (Math.abs(parseFloat(baseSuperiorOInferior_OI.split('B')[0])-parseFloat(baseSuperiorOInferior.split('B')[0]))).toString()+'Δ';
     }else if(baseSuperiorOInferior_OI.split('B')[1] != baseSuperiorOInferior.split('B')[1]){
         resultado = (parseFloat(baseSuperiorOInferior_OI.split('B')[0])+parseFloat(baseSuperiorOInferior.split('B')[0])).toString()+'Δ';
+    }else if(baseSuperiorOInferior_OI==0){
+        resultado = baseSuperiorOInferior;
+    }else if(baseSuperiorOInferior == 0){
+        resultado = baseSuperiorOInferior_OI;
     }
 
     return resultado;
