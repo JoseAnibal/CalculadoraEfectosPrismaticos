@@ -17,6 +17,9 @@ main>section{
 
 }
 
+@media (max-width: 1000px) {
+    
+}
 
 main>section>section{
     display: flex;
