@@ -24,6 +24,7 @@ const calcular_OI=document.querySelector("#calcular_OI");
 
 //Resultados input
 
+const resultados_estilos = document.getElementById("botonResultado");
 const input_BaseHorizontalOjoDerecho = document.getElementById('BaseHorizontalOjoDerecho');
 const input_BaseVerticalOjoDerecho = document.getElementById('BaseVerticalOjoDerecho');
 
@@ -362,6 +363,8 @@ calcular.addEventListener("click",()=>{
     labels.forEach(element => {
         element.style.display = 'inline';
     });
+
+    resultados_estilos.classList.add('resultadoEstilos');
     
 
 
