@@ -1,0 +1,61 @@
+img{
+    height: 10em;
+    width: 10em;
+    object-fit: contain;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+
+}
+
+main>section{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;    
+
+}
+
+
+main>section>section{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2em;
+    background-color: yellow;
+    gap:1em;
+    align-items: center;
+    border-radius: 10px 50px 10px 10px;
+
+}
+
+#botonResultado{
+    background-color: white;
+}
+
+input{
+    border: none;
+    padding: 0.5em 1em;
+    
+}
+
+button{
+    height: 5em;
+    width: 10em;
+}
+
+#datos{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap:1em;
+    padding: 1em;
+}
+
+#datos>div>label{
+   width: 25%;
+}
+#datos>div>input{
+   width: 75%;
+}

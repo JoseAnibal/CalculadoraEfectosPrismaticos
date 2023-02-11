@@ -22,6 +22,43 @@ const distanciaV_OI=document.querySelector("#distV_OI");
 //Boton de calcular.
 const calcular_OI=document.querySelector("#calcular_OI");
 
+//Resultados input
+
+const input_BaseHorizontalOjoDerecho = document.getElementById('BaseHorizontalOjoDerecho');
+const input_BaseVerticalOjoDerecho = document.getElementById('BaseVerticalOjoDerecho');
+
+const input_SumatoriaHorizontal = document.getElementById('SumatoriaHorizontal');
+const input_SumatoriaVertical = document.getElementById('SumatoriaVertical');
+
+const input_BaseHorizontalOjoIzquierdo = document.getElementById('BaseHorizontalOjoIzquierdo');
+const input_BaseVerticalOjoIzquierdo = document.getElementById('BaseVerticalOjoIzquierdo');
+
+const labels = document.querySelectorAll('.labels');
+
+//array 
+
+const inputs =
+[
+    input_BaseHorizontalOjoDerecho,
+    input_BaseVerticalOjoDerecho,
+    input_SumatoriaHorizontal,
+    input_SumatoriaVertical,
+    input_BaseHorizontalOjoIzquierdo,
+    input_BaseVerticalOjoIzquierdo
+];
+
+
+inputs.forEach(element => {
+    element.style.display = 'none';
+});
+
+labels.forEach(element => {
+    element.style.display = 'none';
+});
+
+
+
+
 //Variables.
 let valorAbsolutoH=0;
 let valorAbsolutoV=0;
@@ -95,6 +132,7 @@ calcular.addEventListener("click",()=>{
 
     //OJO derecho-----------------------------------------------------------------------------------------
     //DESCOMENRTAR DESPUES
+
 
     const esfera_valor=parseFloat(esfera.value);
     const cilindro_valor=parseFloat(cilindro.value);
@@ -203,12 +241,10 @@ calcular.addEventListener("click",()=>{
 
     const esfera_valor_OI=parseFloat(esfera_OI.value);
     const cilindro_valor_OI=parseFloat(cilindro_OI.value);
-    const eje_valor_OI=parseFloat(eje_OI.value);
-    
+    let eje_valor_OI=parseFloat(eje_OI.value);
 
     const distanciaH_valor_OI=parseFloat(distanciaH_OI.value);
     const distanciaV_valor_OI=parseFloat(distanciaV_OI.value);
-
 
     // const esfera_valor_OI=parseFloat(-3.5);
     // const cilindro_valor_OI=parseFloat(-2.25);
@@ -222,9 +258,10 @@ calcular.addEventListener("click",()=>{
     //Pasamos a valor absoluto distancia H y V.
     valorAbsolutoH_OI=Math.abs(distanciaH_valor_OI);
     valorAbsolutoV_OI=Math.abs(distanciaV_valor_OI);
-    
+
+
     //Elgimos potencia ed ETA y Lambda y sus ángulos.
-    if(eje_valor_OI<90){
+    if(eje_valor_OI<90 ){
         potenciaETA_OI=esfera_valor_OI;
         potenciaLambda_OI=esfera_valor_OI+cilindro_valor_OI;
         anguloEta_OI=eje_valor_OI;
@@ -254,14 +291,10 @@ calcular.addEventListener("click",()=>{
     efectoPrismaticoEta_OI=Math.abs((100*distanciaETA_OI*0.001*potenciaETA_OI));
     efectoPrismaticoLambda_OI=Math.abs((100*distanciaLambda_OI*0.001*potenciaLambda_OI));
     
-    efectoPrismaticoTotal_OI=Math.sqrt((Math.pow(efectoPrismaticoLambda_OI,2))+(Math.pow(efectoPrismaticoEta_OI,2)));;
+
+    efectoPrismaticoTotal_OI=Math.sqrt((Math.pow(efectoPrismaticoLambda_OI,2))+(Math.pow(efectoPrismaticoEta_OI,2)));
     
     anguloEfectoPrismatico_OI=radianesaGrados(hallarAnguloEfectoPrismatico(efectoPrismaticoLambda_OI,efectoPrismaticoEta_OI));
-
-
-    // potenciaETA,potenciaLambda,
-    // efectoPrismaticoLambda,efectoPrismaticoEta,anguloEta,
-    // anguloEfectoPrismatico
 
     cuadranteRosa_OI = calcular_cuadranteRosa(
         potenciaETA_OI,potenciaLambda_OI,efectoPrismaticoLambda_OI,
@@ -279,9 +312,9 @@ calcular.addEventListener("click",()=>{
         potenciaETA_OI,potenciaLambda_OI,efectoPrismaticoLambda_OI,
         efectoPrismaticoEta_OI,anguloEta_OI,anguloEfectoPrismatico_OI
     );
+
     
     const divisionV_H_OI = dividiendoDistanciasVH(distanciaV_valor_OI,distanciaH_valor_OI);
-
 
     let selector_angulo_OI = selectorAngulo(
         distanciaH_valor_OI,distanciaV_valor_OI,divisionV_H_OI,anguloEta_OI,
@@ -291,9 +324,13 @@ calcular.addEventListener("click",()=>{
 
     let selector_angulo_radianes_OI = gradosaRadianes(selector_angulo_OI);
 
-
+    console.log('selector angulo'+selector_angulo_radianes_OI);
+    console.log('selector prismatico'+efectoPrismaticoTotal_OI);
     let baseH_OI = baseHorizontal(selector_angulo_radianes_OI,efectoPrismaticoTotal_OI);
     let baseV_OI = baseVertical(selector_angulo_radianes_OI,efectoPrismaticoTotal_OI);
+
+
+
 
     let baseNasalTemporal_OI = baseNasalOtemporal_OI(selector_angulo_OI,baseH_OI);
 
@@ -308,11 +345,32 @@ calcular.addEventListener("click",()=>{
     let sumaH = sumaHorizontal(baseNasalTemporal_OI,baseNasalTemporal);
     let sumaV = sumaVertical(baseSuperiorOInferior_OI,baseSuperiorOInferior);
 
+    const resultados = [
+
+        baseNasalTemporal,
+        baseSuperiorOInferior,
+        sumaH,
+        sumaV,
+        baseNasalTemporal_OI,
+        baseSuperiorOInferior_OI
+    ];
+    inputs.forEach((element,index) => {
+        element.value= resultados[index];
+        element.style.display = 'inline';
+    });
+
+    labels.forEach(element => {
+        element.style.display = 'inline';
+    });
+    
+
+
 
     //DATOS A DEVOLVER 
     console.log('Datos Ojo Derecho');
     console.log('Base Horizontal ->'+baseNasalTemporal);
     console.log('Base Vertical ->'+baseSuperiorOInferior);
+
 
     console.log('Datos Ojo Iquierdo');
     console.log('Base Horizontal ->'+baseNasalTemporal_OI);
@@ -724,7 +782,10 @@ function baseNasalOtemporal(resultadoSelectorAngulo,resultadoBaseH){
     // console.log('Selector Angulo base temporal: '+resultadoSelectorAngulo);
 
     let resultado='';
-    if(resultadoSelectorAngulo>=0 && resultadoSelectorAngulo<90){
+
+    if(resultadoBaseH==0){
+        resultado=0; 
+    }else if(resultadoSelectorAngulo>=0 && resultadoSelectorAngulo<90){
         resultado=resultadoBaseH+'BT'; 
     }else if(resultadoSelectorAngulo>90 && resultadoSelectorAngulo<=180){
         resultado=resultadoBaseH+'BN'; 
@@ -732,8 +793,6 @@ function baseNasalOtemporal(resultadoSelectorAngulo,resultadoBaseH){
         resultado=resultadoBaseH+'BN'; 
     }else if(resultadoSelectorAngulo>270 && resultadoSelectorAngulo<=360){
         resultado=resultadoBaseH+'BT'; 
-    }else if(resultadoBaseH==0){
-        resultado=0; 
     }
 
     return resultado;
@@ -742,9 +801,12 @@ function baseNasalOtemporal(resultadoSelectorAngulo,resultadoBaseH){
 function baseNasalOtemporal_OI(resultadoSelectorAngulo,resultadoBaseH){
 
     // console.log('Selector Angulo base temporal: '+resultadoSelectorAngulo);
-
+    console.log('baseh'+resultadoBaseH);
     let resultado='';
-    if(resultadoSelectorAngulo>=0 && resultadoSelectorAngulo<90){
+
+    if(resultadoBaseH==0){
+        resultado=0; 
+    }else if(resultadoSelectorAngulo>=0 && resultadoSelectorAngulo<90){
         resultado=resultadoBaseH+'BN'; 
     }else if(resultadoSelectorAngulo>90 && resultadoSelectorAngulo<=180){
         resultado=resultadoBaseH+'BT'; 
@@ -752,8 +814,6 @@ function baseNasalOtemporal_OI(resultadoSelectorAngulo,resultadoBaseH){
         resultado=resultadoBaseH+'BT'; 
     }else if(resultadoSelectorAngulo>270 && resultadoSelectorAngulo<=360){
         resultado=resultadoBaseH+'BN'; 
-    }else if(resultadoBaseH==0){
-        resultado=0; 
     }
 
     return resultado;
@@ -780,14 +840,22 @@ function baseSuperiorInferior(resultadoSelectorAngulo,resultadoBaseV){
 function sumaHorizontal(baseNasalTemporal_OI,baseNasalTemporal){
 
     let resultado =0;
-    if(baseNasalTemporal_OI.split('B')[1] == baseNasalTemporal.split('B')[1]){
-        resultado = (parseFloat(baseNasalTemporal_OI.split('B')[0])+parseFloat(baseNasalTemporal.split('B')[0])).toString()+'Δ';
-    }else if(baseNasalTemporal_OI.split('B')[1] != baseNasalTemporal.split('B')[1]){
-        resultado = (Math.abs(parseFloat(baseNasalTemporal_OI.split('B')[0])-parseFloat(baseNasalTemporal.split('B')[0]))).toString()+'Δ';
-    }else if(baseNasalTemporal_OI==0){
+
+    if(baseNasalTemporal_OI==0){
+
         resultado = baseNasalTemporal;
+
     }else if(baseNasalTemporal == 0){
+
         resultado = baseNasalTemporal_OI;
+
+    }else if(baseNasalTemporal_OI.split('B')[1] == baseNasalTemporal.split('B')[1]){
+
+        resultado = (parseFloat(baseNasalTemporal_OI.split('B')[0])+parseFloat(baseNasalTemporal.split('B')[0])).toString()+'Δ';
+
+    }else if(baseNasalTemporal_OI.split('B')[1] != baseNasalTemporal.split('B')[1]){
+
+        resultado = (Math.abs(parseFloat(baseNasalTemporal_OI.split('B')[0])-parseFloat(baseNasalTemporal.split('B')[0]))).toString()+'Δ';
     }
 
     return resultado;
@@ -796,14 +864,21 @@ function sumaHorizontal(baseNasalTemporal_OI,baseNasalTemporal){
 function sumaVertical(baseSuperiorOInferior_OI,baseSuperiorOInferior){
     let resultado =0;
 
-    if(baseSuperiorOInferior_OI.split('B')[1] == baseSuperiorOInferior.split('B')[1]){
-        resultado = (Math.abs(parseFloat(baseSuperiorOInferior_OI.split('B')[0])-parseFloat(baseSuperiorOInferior.split('B')[0]))).toString()+'Δ';
-    }else if(baseSuperiorOInferior_OI.split('B')[1] != baseSuperiorOInferior.split('B')[1]){
-        resultado = (parseFloat(baseSuperiorOInferior_OI.split('B')[0])+parseFloat(baseSuperiorOInferior.split('B')[0])).toString()+'Δ';
-    }else if(baseSuperiorOInferior_OI==0){
+    if(baseSuperiorOInferior_OI==0){
+
         resultado = baseSuperiorOInferior;
+
     }else if(baseSuperiorOInferior == 0){
+        
         resultado = baseSuperiorOInferior_OI;
+
+    }else if(baseSuperiorOInferior_OI.split('B')[1] == baseSuperiorOInferior.split('B')[1]){
+
+        resultado = (Math.abs(parseFloat(baseSuperiorOInferior_OI.split('B')[0])-parseFloat(baseSuperiorOInferior.split('B')[0]))).toString()+'Δ';
+
+    }else if(baseSuperiorOInferior_OI.split('B')[1] != baseSuperiorOInferior.split('B')[1]){
+
+        resultado = (parseFloat(baseSuperiorOInferior_OI.split('B')[0])+parseFloat(baseSuperiorOInferior.split('B')[0])).toString()+'Δ';
     }
 
     return resultado;
